@@ -1,0 +1,32 @@
+id = "herdr-buffers"
+name = "Paste Buffers"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Named paste buffers with copy-mode capture, editing, search, and a keyboard picker. Requires Python 3.10+."
+platforms = ["linux", "macos"]
+
+[[actions]]
+id = "capture"
+title = "Save selection to a paste buffer"
+contexts = ["pane"]
+command = ["python3", "plugin.py", "capture"]
+
+[[actions]]
+id = "paste"
+title = "Paste latest buffer (review multiline text in picker)"
+contexts = ["pane"]
+command = ["python3", "plugin.py", "paste"]
+
+[[actions]]
+id = "open"
+title = "Choose or manage paste buffers"
+contexts = ["pane"]
+command = ["python3", "plugin.py", "open"]
+
+[[panes]]
+id = "picker"
+title = "Paste Buffers"
+placement = "popup"
+width = "85%"
+height = "80%"
+command = ["python3", "plugin.py", "pick"]

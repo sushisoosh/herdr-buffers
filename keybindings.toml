@@ -1,0 +1,22 @@
+# Merge these entries into Herdr's config.toml after linking this directory.
+# Copy mode: prefix+[ then v/Space to select, prefix+y to save, q to leave.
+# Native y/Enter still copy to the system clipboard instead of this plugin.
+# Leave copy mode before opening the picker or pasting.
+
+[[keys.command]]
+key = "prefix+y"
+type = "plugin_action"
+command = "herdr-buffers.capture"
+description = "save selection to paste buffer"
+
+[[keys.command]]
+key = "prefix+]"
+type = "plugin_action"
+command = "herdr-buffers.paste"
+description = "paste latest buffer"
+
+[[keys.command]]
+key = "prefix+="
+type = "plugin_action"
+command = "herdr-buffers.open"
+description = "choose or manage paste buffers"
