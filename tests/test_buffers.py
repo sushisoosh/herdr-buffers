@@ -185,7 +185,19 @@ class HerdrTests(unittest.TestCase):
             lambda req: {"id": req["id"], "result": {"type": "ok"}},
             lambda api: api.open_picker("w8:p7", "/tmp/custom-buffers"),
         )
-        self.assertEqual(request["params"]["env"]["BUFFER_STATE_DIR"], "/tmp/custom-buffers")
+        self.assertEqual(request["params"]["env"]["BUFFER_STATE_DIR"], str(Path("/tmp/custom-buffers").resolve()))
+
+    def test_popup_resolves_symlinked_storage_directory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            actual = Path(directory) / "state"
+            actual.mkdir()
+            alias = Path(directory) / "linked-state"
+            alias.symlink_to(actual, target_is_directory=True)
+            request = self.exchange(
+                lambda req: {"id": req["id"], "result": {"type": "ok"}},
+                lambda api: api.open_picker("w8:p7", alias),
+            )
+            self.assertEqual(request["params"]["env"]["BUFFER_STATE_DIR"], str(actual.resolve()))
 
     def test_errors_malformed_eof_and_wrong_correlation(self):
         for response in (
